@@ -6,6 +6,9 @@ import random
 def homepage(request):
     return render(request, 'game/homepage.html')
 
-def getComputerMove(request):
+def computerMove(request):
     randomNum = random.random()
     return JsonResponse({"randomNum":randomNum})
+
+def submitHumanMove(request):
+    return JsonResponse({"TODO":"Constuct human move"})
