@@ -1,4 +1,5 @@
 $("#TestButton").click(function() {
-  console.log("button pressed");
-  $(this).toggleClass("clicked");
+  $.getJSON("http://127.0.0.1:8000/getComputerMove/", function(data, status, xhr) {
+    $("#RandomNum").html("Random: " + data["randomNum"]);
+  });
 });
