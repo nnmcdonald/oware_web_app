@@ -2,12 +2,16 @@
 
 <html>
 <head>
+  {% load static %}
   <meta charset="UTF-8">
   <title>Oware</title>
+  <link rel="stylesheet" href="{% static 'game/css/owareGame.css' %}">
 </head>
 
 <body>
-  <button type="button">Press me</button>
+  <button id="TestButton" type="button">Press me</button>
 </body>
 
+<script src="{% static 'game/js/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'game/js/owareGame.js' %}"></script>
 </html>
