@@ -27,7 +27,7 @@ function updateGameUI() {
     if(checkForWIn()) {
       // You win!
     };
-    let compMove = moveIndex + 1;
+    let compMove = getComputerMove();
     move(1, compMove);
     if(checkForWIn()) {
       // Computer Wins
@@ -55,14 +55,33 @@ function move(player ,index) {
   };
 };
 
-let getComputerMove = function() {
+function getComputerMove() {
   // generate computer move, return index
+  let compMove;
+  let currentState = {};
+  for(let i = 0; i < 7; i++) {
+    currentState['0' + i] = gameStatus[0][i]
+  };
+  for(let i = 0; i < 7; i++) {
+    currentState['1' + i] = gameStatus[1][i]
+  };
+  $.ajax({
+    async:false,
+    type: "POST",
+    data: currentState,
+    url: "/computerMove/",
+    success: function(data){
+      compMove = data['moveIndex'];
+   }
+ });
+
+  return compMove;
 };
 
 function initializeGame(playerTurn) {
   $("#PlayerChoice").toggleClass("hidden");
   if(playerTurn === 1) {
-    let compMove = 5;
+    let compMove = getComputerMove();
     move(1, compMove);
   }
   updateGameUI();
