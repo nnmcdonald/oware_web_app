@@ -23,14 +23,18 @@ function updateGameUI() {
 
   $("#HumanCups .button").click(function() {
     let moveIndex = parseInt($(this).attr("id"));
+    let stones = gameStatus[0][moveIndex];
     move(0, moveIndex);
+    $("#MoveAnnouncement #HumanMove").html("You chose cup: " + (moveIndex + 1) + ", " + stones + " stone(s) dispersed");
     if(checkForWIn()) {
       // You win!
     };
     console.log(gameStatus);
     let compMove = getComputerMove();
     console.log(compMove);
+    stones = gameStatus[1][compMove];
     move(1, compMove);
+    $("#MoveAnnouncement #ComputerMove").html("Computer chose cup: " + (compMove + 1) + ", " + stones + " stone(s) dispersed");
     if(checkForWIn()) {
       // Computer Wins
     };
@@ -98,7 +102,9 @@ function initializeGame(playerTurn) {
   $("#PlayerChoice").toggleClass("hidden");
   if(playerTurn === 1) {
     let compMove = getComputerMove();
+    let stones = gameStatus[1][compMove];
     move(1, compMove);
+    $("#MoveAnnouncement #ComputerMove").html("Computer chose cup: " + (compMove + 1) + ", " + stones + " stone(s) dispersed");
   }
   updateGameUI();
   $("#ComputerCups").toggleClass("hidden");
