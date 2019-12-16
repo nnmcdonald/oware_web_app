@@ -1,6 +1,6 @@
 let gameStatus = [
+  [1,0,3,3,0,8,0],
   [3,3,3,3,3,3,0],
-  [3,3,3,3,3,3,0]
 ];
 
 function checkForWIn() {
@@ -27,7 +27,9 @@ function updateGameUI() {
     if(checkForWIn()) {
       // You win!
     };
+    console.log(gameStatus);
     let compMove = getComputerMove();
+    console.log(compMove);
     move(1, compMove);
     if(checkForWIn()) {
       // Computer Wins
@@ -42,16 +44,29 @@ function move(player ,index) {
   gameStatus[player][index] = 0;
   let currentPlayer = player;
   index += 1;
+
+  function checkForCapture() {
+    if(player === currentPlayer && stones === 1 && gameStatus[currentPlayer][index] === 0) {
+        let captured = gameStatus[(currentPlayer + 1) % 2][5-index];
+        gameStatus[(currentPlayer + 1) % 2][5-index] = 0;
+        gameStatus[player][6] += captured;
+    };
+  };
+
   while(stones > 0) {
-        if(index === 6 && player === currentPlayer) {
+      if(player === currentPlayer && index === 6) {
           // do nothing
-        } else if(index >= 6) {
-          currentPlayer = (currentPlayer + 1) % 2;
-          index = 0;
-        };
-        gameStatus[currentPlayer][index] += 1
-        index += 1
-        stones -= 1
+      } else if(index >= 6) {
+        currentPlayer = (currentPlayer + 1) % 2;
+        index = 0;
+        checkForCapture();
+      } else {
+        checkForCapture();
+      };
+
+      gameStatus[currentPlayer][index] += 1
+      index += 1
+      stones -= 1
   };
 };
 
@@ -72,6 +87,7 @@ function getComputerMove() {
     url: "/computerMove/",
     success: function(data){
       compMove = data['moveIndex'];
+      console.log(typeof compMove);
    }
  });
 

@@ -93,12 +93,23 @@ def move(gameState, player, index):
     newState[player][index] = 0
     currentPlayer = player
     index += 1
+
+    def checkForCapture():
+        if player == currentPlayer and stones == 1 and newState[currentPlayer][index] == 0:
+            captured = newState[(currentPlayer + 1) % 2][5-index]
+            newState[(currentPlayer + 1) % 2][5-index] = 0
+            newState[player][6] += captured
+
     while stones > 0:
         if index == 6 and player == currentPlayer:
             pass
         elif index >= 6:
             currentPlayer = (currentPlayer + 1) % 2
             index = 0
+            checkForCapture()
+        else:
+            checkForCapture()
+
         newState[currentPlayer][index] += 1
         index += 1
         stones -= 1
