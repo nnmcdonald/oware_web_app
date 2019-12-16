@@ -1,11 +1,67 @@
+/*let gameStatus = [
+  [0,2,0,0,0,1,16],
+  [0,0,0,0,0,1,16],
+];*/
+
 let gameStatus = [
-  [1,0,3,3,0,8,0],
+  [3,3,3,3,3,3,0],
   [3,3,3,3,3,3,0],
 ];
 
 function checkForWIn() {
-  return false;
-}
+  // Human player has won majority of stones
+  if(gameStatus[0][6] >= 19) {
+    return 0;
+    // Computer player has won majority of stones
+  } else if(gameStatus[1][6] >= 19) {
+    return 1;
+    // Check if player's still have stones to play
+  } else {
+    let playerStones = 0;
+    let computerStones = 0;
+    for(let i = 0; i < 6; i++){
+      playerStones += gameStatus[0][i];
+      computerStones += gameStatus[1][i];
+      // Both players still have stones, game continues
+      if(playerStones > 0 && computerStones > 0) {
+        return null;
+      }
+    }
+    // One player must have run out of stones
+    if(playerStones === 0) {
+      // Human has run out of stones, so the computer gets all remaining
+      // stones added to the goal cup
+      for(let i = 0; i < 6; i++) {
+        gameStatus[1][6] += gameStatus[1][i];
+      }
+    } else {
+      // Computer has run out of stones, so the human player gets all remaining
+      // stones added to the goal cup
+      for(let i = 0; i < 6; i++) {
+        gameStatus[0][6] += gameStatus[0][i];
+      }
+    }
+    // tie game
+    if(gameStatus[0][6] === gameStatus[1][6]) {
+      return -1;
+    }
+    return (gameStatus[0][6] > gameStatus[1][6]) ? 0 : 1;
+  }
+};
+
+function declareWinner(winner) {
+  let announceWin = $("#WinnerAnnouncement");
+  announceWin.toggleClass("hidden");
+  $("#HumanCups").addClass("disabled");
+  $("MoveAnnouncement").toggleClass("hidden");
+  if(winner === 0) {
+    announceWin.html("Congratulations You Win!");
+  } else if(winner === -1) {
+    announceWin.html("No winner, it's a tie!");
+  } else {
+    announceWin.html("Sorry, You've Lost");
+  }
+};
 
 function updateGameUI() {
   let playerCups = "";
@@ -26,18 +82,21 @@ function updateGameUI() {
     let stones = gameStatus[0][moveIndex];
     move(0, moveIndex);
     $("#MoveAnnouncement #HumanMove").html("You chose cup: " + (moveIndex + 1) + ", " + stones + " stone(s) dispersed");
-    if(checkForWIn()) {
-      // You win!
-    };
-    console.log(gameStatus);
-    let compMove = getComputerMove();
-    console.log(compMove);
-    stones = gameStatus[1][compMove];
-    move(1, compMove);
-    $("#MoveAnnouncement #ComputerMove").html("Computer chose cup: " + (compMove + 1) + ", " + stones + " stone(s) dispersed");
-    if(checkForWIn()) {
-      // Computer Wins
-    };
+    let winner = checkForWIn();
+    if(winner != null) {
+      declareWinner(winner);
+    } else {
+      console.log(gameStatus);
+      let compMove = getComputerMove();
+      console.log(compMove);
+      stones = gameStatus[1][compMove];
+      move(1, compMove);
+      $("#MoveAnnouncement #ComputerMove").html("Computer chose cup: " + (compMove + 1) + ", " + stones + " stone(s) dispersed");
+      winner = checkForWIn();
+      if(winner != null) {
+        declareWinner(winner);
+      }
+    }
     updateGameUI();
   });
 };
