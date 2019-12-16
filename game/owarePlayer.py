@@ -2,20 +2,19 @@ import random
 
 #alpha = float('-inf')
 #beta = float('inf')
-gameboard = [[3 for i in range(7)],[3 for i in range(7)]]
+gameboard = [[3 for i in range(6)],[3 for i in range(6)]]
+gameboard[0] += [0]
+gameboard[1] += [0]
 #gameboard = [
 #    [2,4,2,0,0,5,7],
 #    [3,3,2,0,0,2,6]
 #]
 
 def generateComputerMove(depth, game, alpha, beta):
-    if depth < 8 and game[0][6] < 19 and game[1][6] < 19:
+    if depth < 10 and game[0][6] < 19 and game[1][6] < 19:
         childStateValues = [0]*6
         for i in range(6):
-            player = 0
-            # loops through South's cups on minimizing level
-            if depth % 2 == 1:
-                player = 1
+            player = depth % 2
             # Invalid move
             if game[player][i] == 0:
                 childStateValues[i] = 0
@@ -103,17 +102,23 @@ def move(gameState, player, index):
         elif index >= 6:
             currentPlayer = (currentPlayer + 1) % 2
             index = 0
-        newState[player][index] += 1
+        newState[currentPlayer][index] += 1
         index += 1
         stones -= 1
     return newState
 
+#moves = [3,1,2,5]
+#moves = [4,2,1,3]
+'''moves = [5,3,5,0]
+j = 0
+
 for i in range(8):
     m = None
     if i%2 == 1:
-        m = generateComputerMove(0, [gameboard[1],gameboard[0]], 0, float('inf'))
+        m = moves[j]
+        j+=1
     else:
-        m = generateComputerMove(0, gameboard, 0, float('inf'))
+        m = generateComputerMove(0, gameboard, float('-inf'), float('inf'))
     gameboard = move(gameboard, i%2, m)
     print(m)
-    print(gameboard)
+    print(gameboard)'''
