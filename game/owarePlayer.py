@@ -1,26 +1,23 @@
 import random
 
-#alpha = float('-inf')
-#beta = float('inf')
+# gameboard[i] stores the values for the cups on player i's side
+# and gameboard[i][6] are the respective goal cups
 gameboard = [[3 for i in range(6)],[3 for i in range(6)]]
 gameboard[0] += [0]
 gameboard[1] += [0]
-#gameboard = [
-#    [2,4,2,0,0,5,7],
-#    [3,3,2,0,0,2,6]
-#]
 
 def generateComputerMove(depth, game, alpha, beta):
     if depth < 10 and game[0][6] < 19 and game[1][6] < 19:
         childStateValues = [0]*6
         for i in range(6):
+            # Used to index gameboard in move()
             player = depth % 2
             # Invalid move
             if game[player][i] == 0:
                 childStateValues[i] = 0
             # creates a child state if the current move is possible
             else:
-                # evaluates the child state
+                # generate a new move and evaluate it
                 childState = move(game, player, i)
                 childStateValues[i] = generateComputerMove(depth+1, childState, alpha, beta)
 
@@ -72,7 +69,7 @@ def generateComputerMove(depth, game, alpha, beta):
 
 def evaluate(gamePosition):
     # I considered both players scores and how many seeds were on both sides of the board to evaluate board states
-# The look ahead is set in the generateComputerMove() method and is currently 12
+    # The look ahead is set in generateComputerMove()
     score = gamePosition[0][6]
     oppScore = gamePosition[1][6]
 
@@ -89,7 +86,7 @@ def evaluate(gamePosition):
 
     return float(weightedScoreValue + weightedSeedCount)
 
-# creates and returns new array
+# creates and returns new array after moving stones at gameState[player][index]
 def move(gameState, player, index):
     newState = [[gameState[0][i] for i in range(7)], [gameState[1][i] for i in range(7)]]
     stones = newState[player][index]
@@ -106,19 +103,3 @@ def move(gameState, player, index):
         index += 1
         stones -= 1
     return newState
-
-#moves = [3,1,2,5]
-#moves = [4,2,1,3]
-'''moves = [5,3,5,0]
-j = 0
-
-for i in range(8):
-    m = None
-    if i%2 == 1:
-        m = moves[j]
-        j+=1
-    else:
-        m = generateComputerMove(0, gameboard, float('-inf'), float('inf'))
-    gameboard = move(gameboard, i%2, m)
-    print(m)
-    print(gameboard)'''

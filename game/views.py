@@ -8,7 +8,6 @@ def homepage(request):
     return render(request, 'game/homepage.html')
 
 def computerMove(request):
-    gameboard = [[3 for i in range(6)],[3 for i in range(6)]]
     randomNum = random.random()
     return JsonResponse({"randomNum":randomNum})
 
