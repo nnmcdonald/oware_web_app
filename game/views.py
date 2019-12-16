@@ -11,15 +11,16 @@ def homepage(request):
 
 @csrf_exempt
 def computerMove(request):
-    gameState = [[],[]]
-    for i in range(7):
-        gameState[1] += [int(request.POST.get("0" + str(i)))]
-    for i in range(7):
-        gameState[0] += [int(request.POST.get("1" + str(i)))]
-    compMove = owarePlayer.generateComputerMove(0, gameState, float('-inf'), float('inf'))
-    print(gameState)
-    print(compMove)
-    return JsonResponse({"moveIndex":compMove})
+    if request.method == 'POST':
+        gameState = [[],[]]
+        for i in range(7):
+            gameState[1] += [int(request.POST.get("0" + str(i)))]
+        for i in range(7):
+            gameState[0] += [int(request.POST.get("1" + str(i)))]
+        compMove = owarePlayer.generateComputerMove(0, gameState, float('-inf'), float('inf'))
+        return JsonResponse({"moveIndex":compMove})
+    return render(request, 'game/homepage.html')
+
 
 def submitHumanMove(request):
     return JsonResponse({"TODO":"Constuct human move"})

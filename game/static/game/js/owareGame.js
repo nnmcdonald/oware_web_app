@@ -1,7 +1,3 @@
-/*let gameStatus = [
-  [0,2,0,0,0,1,16],
-  [0,0,0,0,0,1,16],
-];*/
 // gameStatus[0] corresponds to the human player,
 // gameStatus[1] corresponds to the computer player
 let gameStatus = [
@@ -87,9 +83,7 @@ function updateGameUI() {
     if(winner != null) {
       declareWinner(winner);
     } else {
-      console.log(gameStatus);
       let compMove = getComputerMove();
-      console.log(compMove);
       stones = gameStatus[1][compMove];
       move(1, compMove);
       $("#MoveAnnouncement #ComputerMove").html("Computer chose cup: " + (compMove + 1) + ", " + stones + " stone(s) dispersed");
@@ -160,6 +154,7 @@ function getComputerMove() {
 
 function initializeGame(playerTurn) {
   $("#PlayerChoice").toggleClass("hidden");
+  $("#instructionContainer").addClass("hidden");
   if(playerTurn === 1) {
     let compMove = getComputerMove();
     let stones = gameStatus[1][compMove];
@@ -174,6 +169,8 @@ function initializeGame(playerTurn) {
 $("#PlayerChoice .button").click(function() {
   if($(this).attr("id") === "first") {
     initializeGame(0);
+  } else if($(this).attr("id") === "instructions") {
+    $("#instructionContainer").toggleClass("hidden");
   } else {
     initializeGame(1);
   }
