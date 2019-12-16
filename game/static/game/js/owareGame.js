@@ -63,18 +63,20 @@ function declareWinner(winner) {
 function updateGameUI() {
   let playerCups = "";
   let computerCups = "";
-  for(let i = 0; i < 7; i++) {
+  for(let i = 0; i < 6; i++) {
     playerCups += '<button class="button" id="' + i + '">' + gameStatus[0][i] + '</button>'
   };
-  for(let i = 6; i > -1; i--) {
+  for(let i = 5; i > -1; i--) {
     computerCups += '<button class="button" id="' + i + '">' + gameStatus[1][i] + '</button>'
   };
 
-  $("#ComputerCups").html(computerCups);
-  $("#HumanCups").html(playerCups);
-  $("#HumanCups #6").addClass("disabled");
+  $("#gameArea #humanGoal").html(gameStatus[0][6]);
+  $("#gameArea #compGoal").html(gameStatus[1][6]);
+  $("#gameArea #ComputerCups").html(computerCups);
+  $("#gameArea #HumanCups").html(playerCups);
+  $("#gameArea #HumanCups #6").addClass("disabled");
 
-  $("#HumanCups .button").click(function() {
+  $("#gameArea #HumanCups .button").click(function() {
     let moveIndex = parseInt($(this).attr("id"));
     let stones = gameStatus[0][moveIndex];
     move(0, moveIndex);
@@ -162,8 +164,7 @@ function initializeGame(playerTurn) {
     $("#MoveAnnouncement #ComputerMove").html("Computer chose cup: " + (compMove + 1) + ", " + stones + " stone(s) dispersed");
   }
   updateGameUI();
-  $("#ComputerCups").toggleClass("hidden");
-  $("#HumanCups").toggleClass("hidden");
+  $("#gameArea").toggleClass("hidden");
 };
 
 $("#PlayerChoice .button").click(function() {

@@ -20,8 +20,14 @@
         <li><p id="ComputerMove"></p></li>
       </ul>
     </div>
-    <div id="ComputerCups" class="container-flex hidden disabled"></div>
-    <div id="HumanCups" class="container-flex hidden"></div>
+    <div id="gameArea" class="container-flex-row hidden">
+      <button id="compGoal" class="button-goal-comp">0</button>
+      <div class="container-flex-col">
+        <div id="ComputerCups" class="container-flex disabled"></div>
+        <div id="HumanCups" class="container-flex"></div>
+      </div>
+      <button id="humanGoal" class="button-goal">0</button>
+    </div>
     <div id="PlayerChoice" class="container-flex">
       <button id="first" class="button">First Player</button>
       <button id="second" class="button">Second Player</button>
@@ -30,12 +36,11 @@
     <div id="instructionContainer" class="container-flex hidden">
       <pre>This is a version of mancala, the interface presents two rows of
       buttons representing cups with stones in them. The number on each button
-      indicates the number of stones in the cup. The leftmost cup on the top
-      row and the rightmost cup on the bottom row are goal cups for their
-      respective sides. The top row is the computer's
-      cups and the second row is the player's. On each turn a cup is chosen
-      and the stones are dispersed one at a time counterclockwise. If the
-      opponent's goal cup is reached it is skipped. If the last stone placed
+      indicates the number of stones in the cup. The leftmost cup is the
+      computer goal and the rightmost cup is the human player's goal. The top
+      row is the computer's cups and the second row is the player's. On each
+      turn a cup is chosen and the stones are dispersed one at a time counterclockwise.
+      If the opponent's goal cup is reached it is skipped. If the last stone placed
       lands in an empty cup belonging to the current player, then the stones in
       the cup directly across are "captured" and placed in the current player's
       goal cup (for example: last stone lands in cup 2, captures enemy cup 5).
