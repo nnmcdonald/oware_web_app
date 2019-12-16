@@ -27,31 +27,43 @@ function updateGameUI() {
     if(checkForWIn()) {
       // You win!
     };
-    let compMove = getComputerMove();
+    let compMove = moveIndex + 1;
     move(1, compMove);
     if(checkForWIn()) {
       // Computer Wins
     };
+    updateGameUI();
   });
 };
 
 function move(player ,index) {
   // modify game status
+  let stones = gameStatus[player][index];
+  gameStatus[player][index] = 0;
+  let currentPlayer = player;
+  index += 1;
+  while(stones > 0) {
+        if(index === 6 && player === currentPlayer) {
+          // do nothing
+        } else if(index >= 6) {
+          currentPlayer = (currentPlayer + 1) % 2;
+          index = 0;
+        };
+        gameStatus[currentPlayer][index] += 1
+        index += 1
+        stones -= 1
+  };
 };
 
-function getComputerMove() {
-  gameStatus = [
-    [3,3,3,3,3,3,0],
-    [3,3,3,0,4,4,1]
-  ];
-  return 0;
+let getComputerMove = function() {
+  // generate computer move, return index
 };
 
 function initializeGame(playerTurn) {
   $("#PlayerChoice").toggleClass("hidden");
   if(playerTurn === 1) {
-    let compMove = getComputerMove();
-    move(compMove);
+    let compMove = 5;
+    move(1, compMove);
   }
   updateGameUI();
   $("#ComputerCups").toggleClass("hidden");
