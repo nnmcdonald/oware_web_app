@@ -1,3 +1,32 @@
 .clicked {
   color: blue;
 }
+
+.container-flex {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.disabled {
+  pointer-events: none;
+}
+
+.button {
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  margin: 2px;
+  margin-bottom: 5px;
+  border-radius: 3px;
+}
+
+.button:hover {
+  background-color: blue;
+  color: white;
+  border: 1px solid blue;
+}
