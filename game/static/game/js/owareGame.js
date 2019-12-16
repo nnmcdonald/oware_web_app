@@ -2,7 +2,8 @@
   [0,2,0,0,0,1,16],
   [0,0,0,0,0,1,16],
 ];*/
-
+// gameStatus[0] corresponds to the human player,
+// gameStatus[1] corresponds to the computer player
 let gameStatus = [
   [3,3,3,3,3,3,0],
   [3,3,3,3,3,3,0],
