@@ -156,6 +156,7 @@ function getComputerMove() {
 
 function initializeGame(playerTurn) {
   $("#PlayerChoice").toggleClass("hidden");
+  $("#OtherOptions #newGame").toggleClass("hidden");
   $("#instructionContainer").addClass("hidden");
   if(playerTurn === 1) {
     let compMove = getComputerMove();
@@ -170,9 +171,15 @@ function initializeGame(playerTurn) {
 $("#PlayerChoice .button").click(function() {
   if($(this).attr("id") === "first") {
     initializeGame(0);
-  } else if($(this).attr("id") === "instructions") {
-    $("#instructionContainer").toggleClass("hidden");
   } else {
     initializeGame(1);
+  }
+});
+
+$("#OtherOptions .button").click(function() {
+  if($(this).attr("id") === "instructions") {
+    $("#instructionContainer").toggleClass("hidden");
+  } else if($(this).attr("id") === "newGame") {
+    location.reload();
   }
 });
